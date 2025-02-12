@@ -32,7 +32,6 @@
     "check": "biome check --apply ."
   },
   "peerDependencies": {
-    "whatwg-url": "7.1.0",
-    "@elizaos-plugins/client-twitter": "workspace:*"
+    "whatwg-url": "7.1.0"
   }
 }

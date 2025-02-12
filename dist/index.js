@@ -4,9 +4,6 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// src/index.ts
-import { TwitterClientInterface } from "@elizaos/client-twitter";
-
 // src/actions/sn34.ts
 import { elizaLogger } from "@elizaos/core";
 var formatAnalysisHistory = (analyses) => {
@@ -523,8 +520,7 @@ var bittensorPlugin = {
     analysisHistory
   ],
   evaluators: [factEvaluator],
-  providers: [timeProvider],
-  clients: [TwitterClientInterface]
+  providers: [timeProvider]
 };
 var index_default = bittensorPlugin;
 export {
