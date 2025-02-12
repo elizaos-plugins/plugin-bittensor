@@ -18,14 +18,15 @@ var formatAnalysisHistory = (analyses) => {
   return analysisStrings.join("\n");
 };
 var validateAnalysisRequest = async (runtime, message) => {
+  var _a, _b, _c, _d, _e, _f;
   elizaLogger.info("\u{1F50D} BitMind: Validating analysis request...");
-  const urlMatch = message?.content?.text?.match(/https?:\/\/[^\s]+/);
-  const imageUrls = message?.content?.imageUrls;
+  const urlMatch = (_b = (_a = message == null ? void 0 : message.content) == null ? void 0 : _a.text) == null ? void 0 : _b.match(/https?:\/\/[^\s]+/);
+  const imageUrls = (_c = message == null ? void 0 : message.content) == null ? void 0 : _c.imageUrls;
   if (!urlMatch && (!imageUrls || imageUrls.length === 0)) {
     elizaLogger.error("\u274C BitMind: No image URL found in request");
     return false;
   }
-  if (!runtime?.character?.settings?.secrets?.BITMIND) {
+  if (!((_f = (_e = (_d = runtime == null ? void 0 : runtime.character) == null ? void 0 : _d.settings) == null ? void 0 : _e.secrets) == null ? void 0 : _f.BITMIND)) {
     elizaLogger.error("\u274C BitMind: API credentials not configured");
     return false;
   }
@@ -93,10 +94,11 @@ var analyzeImage = {
   validate: validateAnalysisRequest,
   description: "Analyze an image to determine if it was AI-generated using BitMind API",
   handler: async (runtime, message, state, options, callback) => {
+    var _a, _b, _c;
     if (state["isAnalysisInProgress"]) return;
     state["isAnalysisInProgress"] = true;
     elizaLogger.info("\u{1F916} BitMind: Initiating image analysis...");
-    if (!runtime.character?.settings?.secrets?.BITMIND) {
+    if (!((_c = (_b = (_a = runtime.character) == null ? void 0 : _a.settings) == null ? void 0 : _b.secrets) == null ? void 0 : _c.BITMIND)) {
       throw new Error("BitMind API credentials not configured");
     }
     try {
@@ -181,7 +183,7 @@ var analysisHistory = {
   handler: async (runtime, message, state, options, callback) => {
     elizaLogger.info("\u{1F4CA} BitMind: Generating analysis history...");
     try {
-      const limit = options?.limit || 10;
+      const limit = (options == null ? void 0 : options.limit) || 10;
       const rooms = await runtime.databaseAdapter.getRoomsForParticipant(runtime.agentId);
       elizaLogger.info(`\u{1F4CA} BitMind: Found ${rooms.length} rooms`);
       const allMemories = await runtime.messageManager.getMemoriesByRoomIds({
@@ -307,11 +309,12 @@ Response should be a JSON object array inside a JSON markdown block. Correct res
 \`\`\``
 );
 async function handler(runtime, message) {
+  var _a;
   const state = await runtime.composeState(message);
   const { agentId, roomId } = state;
   const context = composeContext({
     state,
-    template: runtime.character.templates?.factsTemplate || factsTemplate
+    template: ((_a = runtime.character.templates) == null ? void 0 : _a.factsTemplate) || factsTemplate
   });
   const facts = await generateObjectArray({
     runtime,
